@@ -43,7 +43,7 @@ npm install
 
 ```bash
 PORT=PORT_NUMBER
-MONGODB_URL=DATABASE_URL
+MONGO_URL=DATABASE_URL
 ```
 #### Run the Application:
 
