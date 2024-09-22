@@ -1,21 +1,17 @@
 const express = require('express')
 const mongoose = require('mongoose')
+require("dotenv").config()
 const Item = require('./models/itemModel')
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+const PORT = process.env.PORT;
 
-//routes
 
-app.get('/', (req, res) => {
-    res.send('Hello Welcome to this API')
-})
+//Routes
 
-app.get('/blog', (req, res) => {
-    res.send('Welcome to this new page')
-})
 
 // Fetch all Items
 
@@ -82,7 +78,7 @@ app.delete('/items/:id', async (req,res)=>{
        const item= await Item.findByIdAndDelete(id) 
        if(!item)
         {
-            return res.status(404).json({message: "cannot find this item"})
+            return res.status(404).json({message: "cannot find this item "})
         }
         res.status(200).json({message: 'Item succesfully deleted'})
     } catch (error) {
@@ -94,11 +90,11 @@ app.delete('/items/:id', async (req,res)=>{
 
 
 
-mongoose.connect('mongodb+srv://guardbro:g9skboUBH4wk4YVJ@restapi.uz2eg.mongodb.net/REST-API?retryWrites=true&w=majority&appName=RESTAPI')
+mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         console.log('Connected succesfully')
-        app.listen(3000, () => {
-            console.log('Node API app is running on port 3000')
+        app.listen(PORT, () => {
+            console.log(`Node API app is running on port ${PORT}`)
         })
     }).catch(() => {
         console.log('Error Occured')
